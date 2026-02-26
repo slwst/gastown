@@ -20,11 +20,12 @@
         packages = {
           gt = pkgs.buildGoModule {
             pname = "gt";
-            version = "0.6.0";
+            version = "0.8.0";
             src = ./.;
-            vendorHash = "sha256-ripY9vrYgVW8bngAyMLh0LkU/Xx1UUaLgmAA7/EmWQU=";
+            vendorHash = "sha256-N1gMI9gflD6CKmo/RiuBzEeCD+0bUAGSrbm8qaGwR0E=";
 
             subPackages = [ "cmd/gt" ];
+            env.CGO_ENABLED = 0;
 
             meta = with pkgs.lib; {
               description = "Multi-agent orchestration system for Claude Code with persistent work tracking";
