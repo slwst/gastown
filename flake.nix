@@ -23,10 +23,9 @@
             version = "0.8.0";
             src = ./.;
             vendorHash = "sha256-N1gMI9gflD6CKmo/RiuBzEeCD+0bUAGSrbm8qaGwR0E=";
-
+            buildInputs = [ pkgs.icu ];
+            env.GOTOOLCHAIN = "auto";
             subPackages = [ "cmd/gt" ];
-            env.CGO_ENABLED = 0;
-
             meta = with pkgs.lib; {
               description = "Multi-agent orchestration system for Claude Code with persistent work tracking";
               homepage = "https://github.com/steveyegge/gastown";
