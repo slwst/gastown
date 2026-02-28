@@ -18,7 +18,7 @@
       in
       {
         packages = {
-          gt = pkgs.buildGoModule {
+          gt = pkgs.buildGoModule rec {
             pname = "gt";
             version = "0.8.0";
             src = ./.;
@@ -26,6 +26,13 @@
             buildInputs = [ pkgs.icu ];
             env.GOTOOLCHAIN = "auto";
             subPackages = [ "cmd/gt" ];
+
+            ldflags = [
+             "-X github.com/steveyegge/gastown/internal/cmd.Version=${version}"
+             "-X github.com/steveyegge/gastown/internal/cmd.Commit=${vendorHash}"
+             #"-X github.com/steveyegge/gastown/internal/cmd.BuildTime=${builtins.currentTime}"
+             "-X github.com/steveyegge/gastown/internal/cmd.BuiltProperly=1"             
+            ];
             meta = with pkgs.lib; {
               description = "Multi-agent orchestration system for Claude Code with persistent work tracking";
               homepage = "https://github.com/steveyegge/gastown";
