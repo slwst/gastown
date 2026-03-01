@@ -964,7 +964,6 @@ func (r *Router) sendToSingle(msg *Message) error {
 	// Flags go first, then -- to end flag parsing, then the positional subject.
 	// This prevents subjects like "--help" from being parsed as flags (see web/api.go).
 	args := []string{"create",
-		"--id", msg.ID,
 		"--assignee", toIdentity,
 		"-d", msg.Body,
 	}
