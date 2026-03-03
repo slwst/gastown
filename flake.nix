@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     beads = {
-      url = "github:steveyegge/beads/v0.55.4";
+      url = "github:steveyegge/beads/v0.58.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -27,7 +27,7 @@
         packages = {
           gt = pkgs.buildGoModule {
             pname = "gt";
-            version = "0.8.0";
+            version = "0.10.0";
             src = ./.;
             vendorHash = "sha256-XWv/slFm796AO928eqzVHms0uUX4ZMJk0I4mZz+kp54=";
 
