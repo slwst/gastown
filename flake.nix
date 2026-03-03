@@ -25,13 +25,14 @@
       in
       {
         packages = {
-          gt = pkgs.buildGoModule {
+          gt = pkgs.buildGoModule rec {
             pname = "gt";
             version = "0.10.0";
             src = ./.;
-            vendorHash = "sha256-XWv/slFm796AO928eqzVHms0uUX4ZMJk0I4mZz+kp54=";
+            vendorHash = "sha256-/+ODyndArUF0nJY9r8G5JKhzQckBHFb48A7EBZmoIr0=";
 
             ldflags = [
+              "-X github.com/steveyegge/gastown/internal/cmd.Version=${version}"
               "-X github.com/steveyegge/gastown/internal/cmd.Build=nix"
               "-X github.com/steveyegge/gastown/internal/cmd.BuiltProperly=1"
             ];
