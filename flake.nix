@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     beads = {
-      url = "github:steveyegge/beads/v0.55.4";
+      url = "github:slwst/beads/chore/v0.59.0-flake-build";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -15,7 +15,7 @@
       self,
       nixpkgs,
       flake-utils,
-      beads,
+      beads
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -25,13 +25,14 @@
       in
       {
         packages = {
-          gt = pkgs.buildGoModule {
+          gt = pkgs.buildGoModule rec {
             pname = "gt";
-            version = "0.8.0";
+            version = "0.11.0";
             src = ./.;
-            vendorHash = "sha256-XWv/slFm796AO928eqzVHms0uUX4ZMJk0I4mZz+kp54=";
+            vendorHash = "sha256-fZucwy6omCXV5/ebOzcqOgJ4SfouCHasmstEX2na5SQ=";
 
             ldflags = [
+              "-X github.com/steveyegge/gastown/internal/cmd.Version=${version}"
               "-X github.com/steveyegge/gastown/internal/cmd.Build=nix"
               "-X github.com/steveyegge/gastown/internal/cmd.BuiltProperly=1"
             ];
