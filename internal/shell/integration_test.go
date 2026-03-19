@@ -19,6 +19,8 @@ func TestDetectShell(t *testing.T) {
 		{"/usr/bin/zsh", "zsh"},
 		{"/bin/bash", "bash"},
 		{"/usr/bin/bash", "bash"},
+		{"/usr/bin/fish", "fish"},
+		{"/run/current-system/sw/bin/fish", "fish"},
 		{"", "zsh"},
 	}
 
@@ -45,6 +47,7 @@ func TestRCFilePath(t *testing.T) {
 	}{
 		{"zsh", filepath.Join(home, ".zshrc")},
 		{"bash", filepath.Join(home, ".bashrc")},
+		{"fish", filepath.Join(home, ".config", "fish", "conf.d", "gastown.fish")},
 	}
 
 	for _, tt := range tests {
@@ -66,7 +69,7 @@ func TestAddRemoveFromRCFile(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := addToRCFile(rcPath); err != nil {
+	if err := addToRCFile(rcPath, "zsh"); err != nil {
 		t.Fatalf("addToRCFile() error = %v", err)
 	}
 
@@ -114,11 +117,11 @@ func TestUpdateRCFile(t *testing.T) {
 	tmpDir := t.TempDir()
 	rcPath := filepath.Join(tmpDir, ".zshrc")
 
-	if err := addToRCFile(rcPath); err != nil {
+	if err := addToRCFile(rcPath, "zsh"); err != nil {
 		t.Fatalf("initial addToRCFile() error = %v", err)
 	}
 
-	if err := addToRCFile(rcPath); err != nil {
+	if err := addToRCFile(rcPath, "zsh"); err != nil {
 		t.Fatalf("second addToRCFile() error = %v", err)
 	}
 
