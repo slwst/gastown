@@ -2,18 +2,21 @@
   "nodes": {
     "beads": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1773453770,
-        "narHash": "sha256-cMxZQJ3NdoqvQPlXt+6EuDruGPTVz/56m4e5apAHeFI=",
-        "owner": "steveyegge",
+        "lastModified": 1775145541,
+        "narHash": "sha256-bdwttgQrRLX7HeazADTOkJ1iO7/K4S0fa7kcaa9djtE=",
+        "owner": "slwst",
         "repo": "beads",
-        "rev": "1ce765eef881a2a7efcc005c789729242da19f8b",
+        "rev": "9b83b5056e3f81f701c675d4c127d3bbf025ac49",
         "type": "github"
       },
       "original": {
-        "owner": "steveyegge",
+        "owner": "slwst",
+        "ref": "chore/v0.63.3-flake-build",
         "repo": "beads",
         "type": "github"
       }
@@ -38,22 +41,6 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1772465433,
-        "narHash": "sha256-ywy9troNEfpgh0Ee+zaV1UTgU8kYBVKtvPSxh6clYGU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c581273b8d5bdf1c6ce7e0a54da9841e6a763913",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
         "lastModified": 1771848320,
         "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
         "owner": "NixOS",
@@ -72,7 +59,7 @@
       "inputs": {
         "beads": "beads",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {

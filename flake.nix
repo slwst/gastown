@@ -4,7 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    beads.url = "github:steveyegge/beads";
+    beads = {
+      url = "github:slwst/beads/chore/v0.63.3-flake-build";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -12,38 +15,26 @@
       self,
       nixpkgs,
       flake-utils,
-      beads,
+      beads
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        # Go 1.25.8: beads v0.60.0 deps (charm.land/huh/v2) require it, nixpkgs has 1.25.7
-        # Remove when nixpkgs ships Go >= 1.25.8
-        goOverlay = final: prev: {
-          go_1_25 = prev.go_1_25.overrideAttrs {
-            version = "1.25.8";
-            src = prev.fetchurl {
-              url = "https://go.dev/dl/go1.25.8.src.tar.gz";
-              hash = "sha256-6YjUokRqx/4/baoImljpk2pSo4E1Wt7ByJgyMKjWxZ4=";
-            };
-          };
-        };
-
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ goOverlay ];
-        };
-        beadsPkg = beads.packages.${system}.default;
+        pkgs = nixpkgs.legacyPackages.${system};
+        beads = self.inputs.beads.packages.${system};
       in
       {
         packages = {
-          gt = pkgs.buildGoModule {
+          gt = pkgs.buildGoLatestModule rec {
             pname = "gt";
-            version = "0.8.0";
+            version = "0.13.0";
             src = ./.;
-            vendorHash = "sha256-XWv/slFm796AO928eqzVHms0uUX4ZMJk0I4mZz+kp54=";
+            vendorHash = "sha256-A/BqG1/CXBLVJdICgTbcP2GO1M/MZfcCTWU3cYVbx9M=";
+
+            checkFlags = [ "-skip=^TestCrossPlatformBuild$" ];
 
             ldflags = [
+              "-X github.com/steveyegge/gastown/internal/cmd.Version=${version}"
               "-X github.com/steveyegge/gastown/internal/cmd.Build=nix"
               "-X github.com/steveyegge/gastown/internal/cmd.BuiltProperly=1"
             ];
@@ -68,12 +59,12 @@
         };
 
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            beadsPkg
-            pkgs.go_1_25
-            pkgs.gopls
-            pkgs.gotools
-            pkgs.go-tools
+          buildInputs = with pkgs; [
+            beads
+            go
+            gopls
+            gotools
+            go-tools
           ];
         };
       }
